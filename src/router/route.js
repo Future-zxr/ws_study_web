@@ -12,7 +12,7 @@ import CourseDetail from "../components/CourseDetail";
 import Video from "../components/Video";
 import Courseware from "../components/Courseware";
 import Section from "../components/Section";
-
+import My from "../components/My"
 
 
 
@@ -59,6 +59,11 @@ export default new Router({
           path:'course_detail',
           name:'course_detail',
           component:CourseDetail
+        },
+        {
+          path:'my',
+          name:'my',
+          component:My
         }
       ]
     },

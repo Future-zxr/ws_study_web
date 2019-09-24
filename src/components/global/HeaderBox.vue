@@ -1,10 +1,14 @@
 <template>
-    <div id="header_box" class="header_box">
-      <div class="header_box_inner">
+  <div class="header_box">
+    <el-row class="el-row-demo" type="flex" justify="space-between">
+      <el-col :span="12">
         <header-box-left></header-box-left>
+      </el-col>
+      <el-col :span="8">
         <header-box-right></header-box-right>
-      </div>
-    </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
@@ -17,22 +21,19 @@
 </script>
 
 <style scoped>
-
-  .header_box{
+  *{
     margin: 0;
     padding: 0;
     border: none;
-    width: 100%;
-    height: 40px;
-    background-color: #000000;
   }
-  .header_box .header_box_inner{
+  .header_box{
+    width: 100%;
+    margin: 0 auto;
+    background-color: black;
+  }
+  .el-row-demo{
     width: 1215px;
     margin: 0 auto;
-    height: 40px;
-    background-color: black;
-    display: flex;
-    justify-content: space-between;
   }
 
 </style>

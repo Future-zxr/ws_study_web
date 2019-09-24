@@ -1,6 +1,6 @@
 <template>
     <div id="header_box_right_login_yes" class="header_box_right_login_yes">
-      <span><router-link class="router_link" to="/login">Logined</router-link></span>
+      <span><router-link class="router_link" to="/my">Logined</router-link></span>
     </div>
 </template>
 
