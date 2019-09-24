@@ -21,6 +21,6 @@
     width: 1215px;
     margin: 0 auto;
     height: 500px;
-    background-color: white;
+    background-color: pink;
   }
 </style>
