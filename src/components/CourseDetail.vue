@@ -1,6 +1,7 @@
 <template>
     <div id="course_detail" class="course_detail">
-      这是{{course_id}}课程
+<!--      这是{{course_id}}课程-->
+      这是{{$route.query.course_id}}课程
     </div>
 </template>
 

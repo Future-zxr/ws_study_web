@@ -2,8 +2,10 @@
 <script>
     export default {
         name: "Global",
+
       server_url:"http://127.0.0.1:8080",
       img_url:"http://pxebavmp1.bkt.clouddn.com",
+
 
     }
 </script>
