@@ -104,7 +104,7 @@
   }
   .home{
     width: 100%;
-    background-color: cornflowerblue;
+    background-color: white;
     padding: 30px 0;
   }
   .home li{
