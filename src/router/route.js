@@ -13,6 +13,12 @@ import Video from "../components/Video";
 import Courseware from "../components/Courseware";
 import Section from "../components/Section";
 import My from "../components/My"
+import Profile from "../components/personalbox/Profile"
+import Total from "../components/personalbox/Total"
+import Collection from "../components/personalbox/Collection"
+import Continue from "../components/personalbox/Continue"
+import Finish from "../components/personalbox/FInish"
+import Account from "../components/personalbox/Account"
 
 
 
@@ -61,9 +67,42 @@ export default new Router({
           component:CourseDetail
         },
         {
-          path:'my',
+          path:'my/',
           name:'my',
-          component:My
+          component:My,
+          children:[
+            {
+              path:'profile',
+              name:'profile',
+              component:Profile
+            },
+            {
+              path:'total',
+              name:'total',
+              component:Total
+            },
+            {
+              path:'collection',
+              name:'collection',
+              component:Collection
+            },
+            {
+              path:'continue',
+              name:'continue',
+              component:Continue
+            },
+            {
+              path:'finish',
+              name:'finish',
+              component:Finish
+            },
+            {
+              path:'account',
+              name:'account',
+              component:Account
+            },
+
+          ]
         }
       ]
     },
