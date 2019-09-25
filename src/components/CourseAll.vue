@@ -5,7 +5,7 @@
       </div>
       <button-type-box></button-type-box>
       <button-sort-box></button-sort-box>
-      <course-list-box></course-list-box>
+      <course-list-box :parameters="parameters"></course-list-box>
       <button-page-box></button-page-box>
     </div>
 </template>
@@ -19,10 +19,19 @@
         name: "CourseAll",
       data(){
         return{
-          condition:{}
+          parameters: {
+            "difficulty_name":'',
+            "direction_name":"",
+            "classify_name":"",
+            "page_index":1,
+            "page_items":30,
+            "sort_flag":0,
+            "search_text":''
+          }
         }
       },
-      components: {CourseListBox, ButtonPageBox, ButtonSortBox, ButtonTypeBox}
+
+      components: {CourseListBox, ButtonPageBox, ButtonSortBox, ButtonTypeBox},
     }
 </script>
 
