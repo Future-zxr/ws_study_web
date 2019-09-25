@@ -1,10 +1,11 @@
 <template>
     <div id="search" class="search">
       <div class="top">
-        搜索框
+        <input type="text" :value="$route.query.search_text">
+        <input type="button" value="search">
       </div>
       <button-sort-box></button-sort-box>
-      <course-list-box></course-list-box>
+      <course-list-box :parameters="parameters" :key="$route.query.search_text"></course-list-box>
       <button-page-box></button-page-box>
     </div>
 </template>
@@ -14,7 +15,21 @@
     import CourseListBox from "./coursebox/CourseListBox";
     import ButtonPageBox from "./coursebox/ButtonPageBox";
     export default {
-        name: "Search",
+      name: "Search",
+      data(){
+        return{
+          parameters:{
+            "difficulty_name":'',
+            "direction_name":"",
+            "classify_name":"",
+            "page_index":1,
+            "page_items":30,
+            "sort_flag":0,
+            "search_text":this.$route.query.search_text
+          },
+          input_data:''
+        }
+      },
       components: {ButtonPageBox, CourseListBox, ButtonSortBox}
     }
 </script>

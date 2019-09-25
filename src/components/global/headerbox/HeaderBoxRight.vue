@@ -1,8 +1,8 @@
 <template>
     <div id="header_box_right" class="header_box_right">
       <div class="search">
-        <input class="search_text" type="text">
-        <button class="search_btn"><router-link class="router_link" to="/search">搜索</router-link></button>
+        <input class="search_text" type="text" v-model="content">
+        <button class="search_btn"><router-link class="router_link" :to="{ path: 'search', query: { search_text:content} }">搜索</router-link></button>
       </div>
       <header-box-right-login-yes v-if='login_state'></header-box-right-login-yes>
       <header-box-right-login-no v-else></header-box-right-login-no>
@@ -17,7 +17,8 @@
         name: "HeaderBoxRightNo",
       data(){
         return{
-          login_state:false
+          login_state:false,
+          content:''
         }
       },
       components: {HeaderBoxRightLoginYes, HeaderBoxRightLoginNo},
@@ -27,7 +28,13 @@
           }
           Bus.$on('login_state_change',(data)=>{
             this.login_state=data;
+
           })
+      },
+      watch:{
+        $route:function () {
+            if (this.content) this.content=''
+        }
       }
     }
 </script>

@@ -3,7 +3,7 @@
     <div class="div-logo" style="width: 200px;height: 30px;background-color: gray;margin: 5px 0;" v-on:click="$router.push({path:'/'})"></div>
     <div class="nav" style="width: 400px;height: 30px;margin: 5px 0;">
       <ul>
-        <li v-for="tag in tags" @click="onMouseOver"><router-link :to="'/'+tag.link" style="text-decoration: none;color: white;line-height: 30px">{{tag.name}}</router-link></li>
+        <li v-for="tag in tags" @click="onClick"><router-link :to="'/'+tag.link" style="text-decoration: none;color: white;line-height: 30px">{{tag.name}}</router-link></li>
       </ul>
     </div>
   </div>
@@ -23,8 +23,8 @@
       }
     },
     methods:{
-      onMouseOver:function () {
-        this
+      onClick:function () {
+
       }
     }
   }
