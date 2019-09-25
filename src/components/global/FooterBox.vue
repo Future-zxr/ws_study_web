@@ -32,9 +32,9 @@
                     <div class="final-right-img">
                       <div class="img_content">
                         <span> <a href="https://wx.qq.com/">
-                          <img src="../../assets/weixin.svg" alt="icon">
+<!--                          <img src="../../assets/weixin.svg" alt="icon">-->
                         </a></span><span> <a href="https://weibo.com/">
-                          <img src="../../assets/weibo.svg" alt="icon">
+<!--                          <img src="../../assets/weibo.svg" alt="icon">-->
                         </a></span>
                       </div>
                     </div>
