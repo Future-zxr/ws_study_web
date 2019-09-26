@@ -43,18 +43,16 @@
 
         /* 显示课程 */
         show_course:function(to_data, res){
-          console.log(res);
-          for(let i=0;i<30;i++){
-            if(res[i].integral==0)
-              res[i].integral='免费';
-            else
-              res[i].integral = res[i].integral+'积分';
-            // (res[i].integral===0)?(res[i].integral='免费'):(res[i].integral=res[i].integral+'积分');
-            to_data.push(
-              {"course_img":"http://pxebavmp1.bkt.clouddn.com/images/course"+res[i].course_icon,"course_name":res[i].name,
-                "course_price":res[i].integral,"course_id":res[i].id,"difficulty":res[i].difficulty__name,
-                "introduce":res[i].introduce}
-            )
+          to_data.splice(0);
+          if(res && res.length>0){
+            for(let i=0;i<30 && i<res.length;i++){
+              (res[i].integral===0)?(res[i].integral='免费'):(res[i].integral=res[i].integral+'积分');
+              to_data.push(
+                {"course_img":"http://pxebavmp1.bkt.clouddn.com/images/course"+res[i].course_icon,"course_name":res[i].name,
+                  "course_price":res[i].integral,"course_id":res[i].id,"difficulty":res[i].difficulty__name,
+                  "introduce":res[i].introduce}
+              )
+            }
           }
         },
         /* 显示课程 END */

@@ -93,6 +93,7 @@
         /* 获取分类 END */
         /* 显示分类 */
         show_classify:function(to_data, res){
+          to_data.splice(0);
           for (let item in res) {
             to_data.push(res[item])
           }
