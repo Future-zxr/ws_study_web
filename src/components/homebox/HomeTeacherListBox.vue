@@ -42,7 +42,7 @@
           this.teacher_index = 11
         },
 
-          /* param 为{"key":value} */
+          /* param 为{key:"value"} */
           Func_axios:function (aurl,  to_data, type, param=null, func) {
             if(type.toUpperCase() === 'GET'){
               if (param){

@@ -5,13 +5,13 @@
     <el-col :span="4" style="height: 400px;">
 
       <ul class="ul_1">
-        <li class="li_1" v-for="item in rcb_courses" @mouseover="onMouseOver(item.index)" @mouseleave="onMouseLeave">
+        <li class="li_1" v-for="item in rcb_courses" @mouseover="onMouseOver(item.index)" @mouseleave="onMouseLeave()">
           <div>{{item.title}}</div>
           <div class="hidden_div" v-if="rcb_left_index===item.index">
             <div style="color: #5dfff2;text-align: left;font-weight: bolder">{{item.contain.c_title}}</div>
               <ul class="ul_2">
                 <li class="li_2" v-for="j in item.contain.c_classify">
-                  {{j.id}} 和 {{j.name}}
+                  <router-link  class="router-link" :to="{ path: 'course_all', query: { direction_name:item.contain.c_title,classify_name:j.name} }">{{j.name}}</router-link>
                 </li>
               </ul>
           </div>
@@ -58,8 +58,6 @@
                   c_title:"前沿技术",
                   c_classify:[
                     // {id:1,value:'测试'}
-                    {id:1, name:'测试1'},
-                    {id:2, name:'测试2'},
                   ]
                 }
               },
@@ -134,6 +132,13 @@
             login_state:true,
           }
         },
+      created:function(){
+        let url =  this.Global.server_url + '/course/get_classify';
+        for (let i in this.rcb_courses){
+          this.Func_axios(url,this.rcb_courses[i].contain.c_classify ,'GET',{direction_name:this.rcb_courses[i].contain.c_title});
+        }
+
+      },
       mounted:function() {
         if (window.localStorage.getItem('islogin')){
           this.login_state=true;
@@ -145,10 +150,40 @@
       },
       methods:{
         onMouseOver:function (index) {
-          this.rcb_left_index = index
+          this.rcb_left_index = index;
         },
         onMouseLeave:function () {
           this.rcb_left_index = 0
+        },
+        /* param 为{"key":value} */
+        Func_axios:function (aurl,  to_data, type, param=null) {
+          if(type.toUpperCase() === 'GET'){
+            if (param){
+              this.axios.get(aurl,{params:param})
+                .then(function (response) {
+                  for (let i in response.data){
+                    to_data.push(response.data[i]);
+                  }
+                  console.log(response.data);
+                })
+                .catch(function (error) {
+                  console.log(error)
+                })
+            } else{
+              this.axios.get(aurl)
+                .then(function (response) {
+                  for (let i in response.data){
+                    to_data.push(response.data[i])
+                  }
+                })
+                .catch(function (error) {
+                  console.log(error)
+                })
+            }
+          }
+          else{
+            alert('post')
+          }
         }
       }
     }
@@ -217,10 +252,22 @@
     list-style: none;
     display: flex;
     justify-content: start;
+    flex-wrap: wrap;
   }
   .li_1 .hidden_div .li_2{
     color: black;
     margin-right: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  .router-link{
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    transition: color 0.5s;
+  }
+  .router-link:hover{
+    color: #00d6ff;
   }
   /* 左侧导航 END */
 
