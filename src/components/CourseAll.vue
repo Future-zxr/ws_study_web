@@ -3,9 +3,9 @@
       <div class="title">
         <h2>全部课程</h2>
       </div>
-      <button-type-box></button-type-box>
+      <button-type-box @click_direction="on_click_direction($event)" @click_classify="on_click_classify($event)"></button-type-box>
       <button-sort-box></button-sort-box>
-      <course-list-box :parameters="parameters"></course-list-box>
+      <course-list-box :parameters="parameters" ref="all_course_list"></course-list-box>
       <button-page-box></button-page-box>
     </div>
 </template>
@@ -20,17 +20,29 @@
       data(){
         return{
           parameters: {
-            "difficulty_name":'',
-            "direction_name":"",
-            "classify_name":"",
-            "page_index":1,
-            "page_items":30,
-            "sort_flag":0,
-            "search_text":''
+            difficulty_name:'',
+            direction_name:"",
+            classify_name:"",
+            page_index:1,
+            page_items:30,
+            sort_flag:0,
+            search_text:''
           }
         }
       },
+      methods:{
+        on_click_direction:function (ev) {
+          this.parameters.direction_name = ev.direction_name;
+          this.$refs.all_course_list.get_course_by_condition();
+        },
+        on_click_classify:function (ev) {
+          this.parameters.classify_name = ev.classify_name;
+          console.log(this.parameters);
+        },
 
+
+
+      },
       components: {CourseListBox, ButtonPageBox, ButtonSortBox, ButtonTypeBox},
     }
 </script>
@@ -43,13 +55,14 @@
   }
   .course_all{
     width: 100%;
-    background-color: #bbc8ea;
+    background-color: #f3f5f7;
     padding-top: 20px;
   }
   .course_all .title{
     width: 100%;
-    background-color: #b8ffc4;
     height: 95px;
+    line-height: 95px;
+    background-color: white;
   }
   .course_all .title h2{
     width: 1215px;

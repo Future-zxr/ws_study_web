@@ -1,6 +1,8 @@
 <template>
     <div id="button_page_box" class="button_page_box">
-      分页按钮
+      <!-- total一共多少个，page-size 每页显示多少个-->
+      <el-pagination class="el-pagination" background layout="prev, pager, next" :total="1000" :page-size="50">
+      </el-pagination>
     </div>
 </template>
 
@@ -15,6 +17,12 @@
     width: 550px;
     margin: 0 auto;
     height: 120px;
-    background-color: rgba(234, 136, 97, 0.61);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .el-pagination{
+    width: 400px;
+    margin: 0 auto;
   }
 </style>

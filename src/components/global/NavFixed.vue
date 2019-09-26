@@ -23,7 +23,7 @@
           let scroll = document.documentElement.scrollTop || document.body.scrollTop;
           let timer = setInterval(() => {
             scroll -= 80;
-            window.scrollTo(0,scroll)
+            window.scrollTo(0,scroll);
             if (scroll <= 0) {
               clearInterval(timer)
             }
@@ -44,12 +44,11 @@
 <style scoped>
   .nav_fixed{
     width: 40px;
-    height: 40px;
-    border-radius:50px ;
+    height: 150px;
     position: fixed;
     right: 0;
     bottom: 0;
-    background-color: gray;
+    background-color: pink;
   }
   .nav_fixed:hover{
     cursor: pointer;

@@ -1,12 +1,12 @@
 <template>
   <div class="course_list_box">
-      <div class="dis_article_c" v-for="condition in conditions" :key="condition.course_id" @click="ToCourseDetail(condition.course_id)">
+      <div class="dis_article_c" v-for="cou_item in course_list" :key="cou_item.course_id" @click="ToCourseDetail(cou_item.course_id)">
         <div class="dis_article_c_inner">
-          <img :src="condition.course_img" alt="" style="z-index: 1000">
-          <h3>{{condition.course_name}}</h3>
-          <p>{{condition.difficulty}}</p>
-          <p class="p_intro">{{condition.introduce}}</p>
-          <p class="integral">{{condition.course_price}}</p>
+          <img :src="cou_item.course_img" alt="" style="z-index: 1000">
+          <h3>{{cou_item.course_name}}</h3>
+          <p>{{cou_item.difficulty}}</p>
+          <p class="p_intro">{{cou_item.introduce}}</p>
+          <p class="integral">{{cou_item.course_price}}</p>
         </div>
       </div>
   </div>
@@ -18,81 +18,60 @@
       props:['parameters'],
       data() {
         return {
-          conditions: []
+          course_list: []
         }
       },
       methods:{
+
+        /* 获取课程 根据条件 */
+        get_course_by_condition:function () {
+          let url = this.Global.server_url + '/course/get_course/';
+          this.GlobalFunc.func_axios(url,'GET', this.parameters,
+            res=>{ this.show_course(this.course_list,res) }
+          )
+        },
+        /* 获取课程 根据条件 END */
+
+        /* 获取课程 根据搜索条件 */
+        get_course_by_search_text:function () {
+          let url = this.Global.server_url + '/course/search_course/';
+          this.GlobalFunc.func_axios(url,'GET', { "search_text":this.parameters.search_text},
+            res=>{ this.show_course(this.course_list,res) }
+          )
+        },
+        /* 获取课程 根据搜索条件  END */
+
+        /* 显示课程 */
+        show_course:function(to_data, res){
+          console.log(res);
+          for(let i=0;i<30;i++){
+            if(res[i].integral==0)
+              res[i].integral='免费';
+            else
+              res[i].integral = res[i].integral+'积分';
+            // (res[i].integral===0)?(res[i].integral='免费'):(res[i].integral=res[i].integral+'积分');
+            to_data.push(
+              {"course_img":"http://pxebavmp1.bkt.clouddn.com/images/course"+res[i].course_icon,"course_name":res[i].name,
+                "course_price":res[i].integral,"course_id":res[i].id,"difficulty":res[i].difficulty__name,
+                "introduce":res[i].introduce}
+            )
+          }
+        },
+        /* 显示课程 END */
+
+        /* 跳转到课程详情 */
         ToCourseDetail:function (id) {
           this.$router.push({ path: 'course_detail', query: { course_id: id} })
         },
-        get_course_by_condition:function (data,parameters) {
-          let url = this.Global.server_url + '/course/get_course/';
-          // get
-          this.axios.get(url,{
-            params:{
-              "difficulty_name":parameters.difficulty_name,
-              "direction_name":parameters.direction_name,
-              "classify_name":parameters.classify_name,
-              "page_index":parameters.page_index,
-              "page_items":parameters.page_items,
-              "sort_flag":parameters.sort_flag,
-            }
-          })
-            .then(function (response) {
-              console.log(response.data);
-              for(let i=0;i<30;i++){
-                if (response.data[i].integral == 0){
-                  response.data[i].integral='免费'
-                }
-                else {
-                  response.data[i].integral=response.data[i].integral+'积分'
-                }
-                data.push(
-                  {"course_img":"http://pxebavmp1.bkt.clouddn.com/images/course"+response.data[i].course_icon,"course_name":response.data[i].name,
-                    "course_price":response.data[i].integral,"course_id":response.data[i].id,"difficulty":response.data[i].difficulty__name,
-                    "introduce":response.data[i].introduce}
-                )
-              }
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        },
+        /* 跳转到课程详情 END */
 
-        get_course_by_search_text:function (data,parameters) {
-          let url = this.Global.server_url + '/course/search_course/';
-          // get
-          this.axios.get(url,{
-            params:{
-              "search_text":parameters.search_text,
-            }
-          })
-            .then(function (response) {
-              // console.log(response.data);
-              for(let i=0;i<30;i++){
-                if (response.data[i].integral == 0){
-                  response.data[i].integral='免费'
-                }
-                else {
-                  response.data[i].integral=response.data[i].integral+'积分'
-                }
-                data.push(
-                  {"course_img":"http://pxebavmp1.bkt.clouddn.com/images/course"+response.data[i].course_icon,"course_name":response.data[i].name,
-                    "course_price":response.data[i].integral,"course_id":response.data[i].id,"difficulty":response.data[i].difficulty__name,
-                    "introduce":response.data[i].introduce}
-                )
-              }
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        },
+
       },
       created: function () {
         if (this.parameters.search_text) {
-          this.get_course_by_search_text(this.conditions,this.parameters)
+          this.get_course_by_search_text()
         }else {
-          this.get_course_by_condition(this.conditions,this.parameters)
+          this.get_course_by_condition()
         }
       },
     }

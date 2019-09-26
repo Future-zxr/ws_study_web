@@ -87,7 +87,6 @@
         this.get_new_course(this.tags[3].data_info,'中级',0)//技术提升课程
         this.get_new_course(this.tags[4].data_info,'高级',0)//实战课程
 
-
       },
     }
 </script>

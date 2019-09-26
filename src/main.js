@@ -7,6 +7,8 @@ Vue.prototype.Global = Global;
 
 import axios from 'axios'
 Vue.prototype.axios = axios;
+import GlobalFunc from './Axios'
+Vue.prototype.GlobalFunc = GlobalFunc;
 
 
 import ElementUI from 'element-ui'

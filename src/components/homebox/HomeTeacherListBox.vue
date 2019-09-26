@@ -50,7 +50,6 @@
                     for (let i in response.data){
                       to_data.push(response.data[i]);
                     }
-                    console.log(response.data);
                   })
                   .catch(function (error) {
                     console.log(error)
