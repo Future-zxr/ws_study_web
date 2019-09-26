@@ -4,13 +4,12 @@
       <div class="container">
         <div class="per_teacher" v-for="(item,index) in teacher_data" @mouseover="onMouseOverTea(index)" @mouseleave="onMouseLeaveTea" >
 
-          <img :src="Global.img_url + '/images/'+ item.teacher_icon__icon_img" alt="" :class="{'img_style_01':!(index===teacher_index),'ime_style':(index===teacher_index)}">
+          <img :src="Global.img_url + '/images/'+ item.teacher_icon__icon_img" alt="" :class="{'img_style_01':!(index===teacher_index),'img_style':(index===teacher_index)}">
           <div :class="{'teacher_info':!(index===teacher_index),'teacher_info_change':(index===teacher_index)}">
-            <h3>许老师</h3>
-            <p>百度地图创建初期研发骨干</p>
+            <h3>{{item.name}}</h3>
+            <p>{{item.teacher_identity__identity}}</p>
           </div>
-          <p class="text_info" style="float: right" >&nbsp;&nbsp;&nbsp;&nbsp;原百度地图创建初期研发主干，现为国内某领先的视觉创业公司的大数据平台负责人，-->
-                                      曾先后工作于Google、百度、搜狐、58等知名互联网公司，专注算法研发，曾有多年竞赛算法教学经验。</p>
+          <p class="text_info" style="float: right" v-if="index===teacher_index">&nbsp;&nbsp;&nbsp;&nbsp;{{item.introduce}}</p>
         </div>
       </div>
     </div>
@@ -142,7 +141,6 @@
     float: left;
     transition:  width 0.5s,height 0.5s;
     padding: 10px;
-    display: none;
   }
   .per_teacher .teacher_info_change{
     position: absolute;
@@ -153,7 +151,10 @@
     font-size: 12px;
     text-align: center;
     transition:  width 0.5s,height 0.5s,font-size 0.5s,top 0.5s,right 0.5s;
-    background-color: red;
+  }
+  .per_teacher .text_info{
+    display: block;
+    font-size: 14px;
   }
 
 
