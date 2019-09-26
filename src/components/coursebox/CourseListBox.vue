@@ -39,7 +39,7 @@
             }
           })
             .then(function (response) {
-              console.log(response.data);
+              // console.log(response.data);
               for(let i=0;i<30;i++){
                 if (response.data[i].integral == 0){
                   response.data[i].integral='免费'
