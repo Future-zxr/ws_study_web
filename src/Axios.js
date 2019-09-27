@@ -12,7 +12,6 @@ export default {
       if (param){
         axios.get(url,{params:param})
           .then(function (response) {
-            console.log(response)
             callback(response.data)
           })
           .catch(function (error) {
@@ -23,7 +22,6 @@ export default {
       else{
         axios.get(url)
           .then(function (response) {
-            console.log(response)
             callback(response.data)
           })
           .catch(function (error) {

@@ -27,8 +27,7 @@
           }
       },
       created:function () {
-        let url = this.Global.server_url + '/user/get_teacher/';
-        this.Func_axios(url, this.teacher_data, 'GET',{},this.test);
+        this.get_teacher();
       },
       mounted:function(){
         console.log(this.teacher_data)
@@ -40,36 +39,21 @@
         onMouseLeaveTea:function () {
           this.teacher_index = 11
         },
-
-          /* param 为{key:"value"} */
-          Func_axios:function (aurl,  to_data, type, param=null, func) {
-            if(type.toUpperCase() === 'GET'){
-              if (param){
-                this.axios.get(aurl,{params:param})
-                  .then(function (response) {
-                    for (let i in response.data){
-                      to_data.push(response.data[i]);
-                    }
-                  })
-                  .catch(function (error) {
-                    console.log(error)
-                  })
-              } else{
-                this.axios.get(aurl)
-                  .then(function (response) {
-                    for (let i in response.data){
-                      to_data.push(response.data[i])
-                    }
-                  })
-                  .catch(function (error) {
-                    console.log(error)
-                  })
-              }
-            }
-            else{
-              alert('post')
-            }
+        /* 获取教师 */
+        get_teacher:function(){
+          let url = this.Global.server_url + '/user/get_teacher/';
+          this.GlobalFunc.func_axios(url,'GET', null,
+            res=>{ this.show_teacher(this.teacher_data, res) }
+          );
+        },
+        /* 获取教师 END */
+        /* 显示教师动画 */
+        show_teacher:function(to_data, res){
+          for (let item in res) {
+            to_data.push(res[item])
           }
+        },
+        /* 显示教师动画 END */
       }
     }
 </script>

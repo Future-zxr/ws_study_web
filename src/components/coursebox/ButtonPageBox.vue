@@ -1,14 +1,29 @@
 <template>
     <div id="button_page_box" class="button_page_box">
       <!-- total一共多少个，page-size 每页显示多少个-->
-      <el-pagination class="el-pagination" background layout="prev, pager, next" :total="1000" :page-size="50">
+      <el-pagination class="el-pagination" background layout="prev, pager, next" :total="1000" :page-size="50" :current-page="current_page"  @current-change="handleCurrentChange">
       </el-pagination>
     </div>
 </template>
 
 <script>
     export default {
-        name: "ButtonPageBox"
+        name: "ButtonPageBox",
+      data(){
+        return{
+          current_page:1
+        }
+      },
+      methods:{
+        handleCurrentChange(val) {
+          console.log(`当前页: ${val}`);
+        }
+      },
+      watch:{
+          current_page:function () {
+            alert('wqwwqcss...')
+          }
+      }
     }
 </script>
 

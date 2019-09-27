@@ -7,7 +7,7 @@
           <div class="title"><span>方向：</span></div>
           <div class="content">
             <ul>
-              <li v-for="ditem in direction_list"><a href="javascript: void 0" :class="{selected:dir_index===ditem.id}" @click="onClickDirection(ditem.id,ditem.name)">{{ditem.name}}</a></li>
+              <li v-for="(ditem,index) in direction_list"><a href="javascript: void 0" :class="{selected:dir_index===index}" @click="onClickDirection(index)">{{(ditem.name==='')?'全部':ditem.name}}</a></li>
             </ul>
           </div>
         </div>
@@ -17,7 +17,7 @@
           <div class="title"><span>分类：</span></div>
           <div class="content">
             <ul>
-              <li v-for="citem in classify_list"><a href="javascript:void 0" :class="{selected:cla_index===citem.id}" @click="onClickClassify(citem.id,citem.name)">{{citem.name}}</a></li>
+              <li v-for="(citem,index) in classify_list"><a href="javascript:void 0" :class="{selected:cla_index===index}" @click="onClickClassify(index)">{{(citem.name==='')?'全部 ':citem.name}}</a></li>
             </ul>
           </div>
         </div>
@@ -27,7 +27,7 @@
           <div class="title"><span>难度：</span></div>
           <div class="content">
             <ul>
-              <li v-for="difitem in difficulty_list"><a href="javascript:void 0" :class="{selected:dif_index===difitem.id}" @click="dif_index=difitem.id">{{difitem.name}}</a></li>
+              <li v-for="(difitem,index) in difficulty_list"><a href="javascript:void 0" :class="{selected:dif_index===index}" @click="onClickDifficulty(index)">{{(difitem.name==='')?'全部':difitem.name}}</a></li>
             </ul>
           </div>
         </div>
@@ -45,18 +45,19 @@
           return{
             dir_index:0,
             cla_index:0,
+            cla_id:0,
             dif_index:0,
             direction_list:[
               // {id:14,name:'计算机基础'}
-              {id:0,name:'全部'}
+              {id:0,name:''}
             ],
             classify_list:[
               // {id:51,name:"HTML/CSS",direction__name:11}
-              {id:0,name:'全部'}
+              {id:0,name:'',direction__name:''}
             ],
             difficulty_list:[
               // {id:1,name:"入门"},
-              {id:0,name:'全部'}
+              {id:0,name:''}
             ]
           }
       },
@@ -65,6 +66,7 @@
         this.get_classify();
         this.get_difficulty();
       },
+
       methods:{
 
         /* 获取方向 */
@@ -86,7 +88,7 @@
         /* 获取分类 */
         get_classify:function(){
           let cla_url = this.Global.server_url + '/course/get_classify/';
-          this.GlobalFunc.func_axios(cla_url,'GET', {"direction_name":""},
+          this.GlobalFunc.func_axios(cla_url,'GET', {"direction_name":this.direction_list[this.dir_index].name},
             res=> { this.show_classify(this.classify_list, res)}
           );
         },
@@ -94,9 +96,21 @@
         /* 显示分类 */
         show_classify:function(to_data, res){
           to_data.splice(0);
+          to_data.push({id:0,name:'',direction__name:''});
           for (let item in res) {
             to_data.push(res[item])
           }
+          /* 当点击分类时，动态获取其id */
+          if (this.cla_id){
+            var j = 0;
+            for(;j<to_data.length;j++){
+              if(to_data[j].id === this.cla_id) break;
+            }
+            this.cla_index=j;
+          }else{
+            this.cla_index = 0;
+          }
+          /* 当点击分类时，动态获取其id END */
         },
         /* 显示分类 END */
 
@@ -117,20 +131,39 @@
         /* 显示难度 END */
 
         /* 点击方向触发事件 */
-        onClickDirection:function (direction_id,direction_name) {
-          this.dir_index=direction_id;
-          this.$emit('click_direction',{"direction_id":direction_id,"direction_name":direction_name});
+        onClickDirection:function (index) {
+          this.dir_index=index;
+          this.get_classify();
+          this.cla_index=0;
+          this.cla_id = 0;
+          this.$emit('click_direction',{"direction_id":this.direction_list[index].id,"direction_name":this.direction_list[index].name});
         },
         /* 点击方向触发事件 END */
         /* 点击分类触发事件 */
-        onClickClassify:function (classify_id,classify_name) {
-          this.cla_index=classify_id;
-          this.$emit('click_classify',{"classify_id":classify_id,"classify_name":classify_name});
+        onClickClassify:function (index) {
+          this.cla_index=index;
+          this.cla_id = this.classify_list[index].id;
+          /* 当方向未选择，点击分类时 */
+          if(this.dir_index === 0 && !(index===0)) {
+            var ii = 0;
+            for (; ii<this.direction_list.length; ii++) {
+              if (this.direction_list[ii].name === this.classify_list[index].direction__name) break;
+            }
+            this.dir_index = ii;
+            this.get_classify();
+          }
+          /* 当方向未选择，点击分类时 END */
+          this.$emit('click_classify',{"classify_id":this.classify_list[index].id,"classify_name":this.classify_list[index].name});
         },
        /* 点击分类触发事件 END*/
+       /* 点击难度触发事件 */
+        onClickDifficulty:function (index) {
+          this.dif_index=index;
+          this.$emit('click_difficulty',{"difficulty_id":this.difficulty_list[index].id, "difficulty_name":this.difficulty_list[index].name});
+        }
+       /* 点击难度触发事件 END */
 
-
-      }
+      },
     }
 </script>
 
