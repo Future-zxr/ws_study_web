@@ -15,6 +15,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI);
 
+/* svg */
+import Icon from 'vue-svg-icon/Icon'
+Vue.component('icon',Icon); // 注册
+/* svg END*/
 
 new Vue({
   el: '#app',
