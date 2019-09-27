@@ -3,9 +3,9 @@
       <div class="title">
         <h2>精品课程</h2>
       </div>
-      <button-type-box></button-type-box>
+      <button-type-box @click_direction="on_click_direction($event)" @click_classify="on_click_classify($event)" @click_difficulty="on_click_difficulty($event)"></button-type-box>
       <button-sort-box></button-sort-box>
-      <course-list-box></course-list-box>
+      <course-list-box :parameters="parameters" ref="unique_course_list"></course-list-box>
       <button-page-box></button-page-box>
     </div>
 </template>
@@ -19,10 +19,34 @@
         name: "CourseUnique",
       data(){
         return{
-          condition:{}
+          parameters: {
+            "difficulty_name":'',
+            "direction_name":"",
+            "classify_name":"",
+            "page_index":1,
+            "page_items":30,
+            "sort_flag":3,
+            "search_text":''
+          }
         }
       },
-      components: {ButtonPageBox, CourseListBox, ButtonSortBox, ButtonTypeBox}
+      methods:{
+        on_click_direction:function (ev) {
+          this.parameters.direction_name = ev.direction_name;
+          this.parameters.classify_name = "";
+          this.$refs.unique_course_list.get_course_by_condition();
+        },
+        on_click_classify:function (ev) {
+          this.parameters.classify_name = ev.classify_name;
+          this.$refs.unique_course_list.get_course_by_condition();
+        },
+        on_click_difficulty:function (ev) {
+          this.parameters.difficulty_name = ev.difficulty_name;
+          this.$refs.unique_course_list.get_course_by_condition();
+        }
+
+      },
+      components: {ButtonPageBox, CourseListBox, ButtonSortBox, ButtonTypeBox},
     }
 </script>
 
