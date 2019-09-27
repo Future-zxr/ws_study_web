@@ -133,7 +133,7 @@
           }
         },
       created:function(){
-        let url =  this.Global.server_url + '/course/get_classify';
+        let url =  this.Global.server_url + '/course/get_classify/';
         for (let i in this.rcb_courses){
           this.Func_axios(url,this.rcb_courses[i].contain.c_classify ,'GET',{direction_name:this.rcb_courses[i].contain.c_title});
         }

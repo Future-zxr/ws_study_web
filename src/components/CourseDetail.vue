@@ -1,17 +1,24 @@
 <template>
     <div id="course_detail" class="course_detail">
-<!--      这是{{course_id}}课程-->
-      这是{{$route.query.course_id}}课程
+<!--      这是{{$route.query.course_id}}课程-->
+      <base-info></base-info>
+      <center-list></center-list>
     </div>
 </template>
 
 <script>
+  import ShowCourseInfoTop from './coursedetailbox/ShowCourseInfoTop'
+  import ShowInfoMain from './coursedetailbox/ShowInfoMain'
     export default {
         name: "CourseDetail",
       data(){
           return{
-            course_id:228
+            course_id:this.$route.query.course_id,
           }
+      },
+      components:{
+          "base-info":ShowCourseInfoTop,
+          "center-list":ShowInfoMain,
       }
     }
 </script>
